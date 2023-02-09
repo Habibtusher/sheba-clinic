@@ -1,0 +1,48 @@
+
+
+[
+    {
+        "_id":1,
+        "name":"Cosmetic Dentistry",
+        "slots":[
+            "08.00 AM-08.30 AM",
+            "08.30 AM-09.00 AM",
+            "09.00 AM-09.30 AM",
+            "09.30 AM-10.00 AM",
+            "10.30 AM-10.30 AM",
+            "10.30 AM-11.31 AM"
+        ]
+    },
+    {
+        "_id":2,
+        "name":"Teeth Cleaning",
+        "slots":[
+            "08.00 AM-08.30 AM",
+            "08.30 AM-09.00 AM",
+            "09.00 AM-09.30 AM",
+            "09.30 AM-10.00 AM",
+            "10.30 AM-10.30 AM",
+            "10.30 AM-11.31 AM"
+        ]
+    },
+    {
+        "_id":3,
+        "name":"Cosmetic Dentistry",
+        "slots":[
+            "08.00 AM-08.30 AM",
+            "08.30 AM-09.00 AM",
+            "09.00 AM-09.30 AM",
+            "09.30 AM-10.00 AM",
+            "10.30 AM-10.30 AM",
+            "10.30 AM-11.31 AM"
+        ]
+    },
+    {
+        "_id":4,
+        "name":"Oral Surgery",
+        "slots":[
+         
+            
+        ]
+    }
+]

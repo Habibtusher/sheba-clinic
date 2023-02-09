@@ -46,7 +46,7 @@ const Services = () => {
             style={{ maxWidth: "100%", gap: "30px" }}
             className=" hero-content flex-col lg:flex-row"
           >
-            <img src={treatment} className="max-w-sm rounded-lg shadow-2xl" />
+            <img src={treatment} className="lg:max-w-lg md:max-w-xs  rounded-lg shadow-2xl" />
             <div className="lg:w-2/5">
               <h1 className="text-4xl font-bold">Box Office News!</h1>
               <p className="py-6">
