@@ -1,18 +1,27 @@
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { getAvailableAppointmets } from "../../../api/ApiConstant";
+import { getData } from "../../../api/CommonService";
+import Loading from "../../Shared/Loading";
 import AppoinmentOption from "./AppoinmentOption";
 import AppointmentMdal from "./AppointmentMdal";
 
 const AvailableAppointment = ({selected}) => {
-    const [data,setData]= useState([]);
+    // const [appointmentOptions,setAppointmentOptions]= useState([]);
 const [teatment,setTreatment] = useState({})
- 
-    useEffect(()=>{
-        fetch('services.json')
-        .then(res => res.json())
-        .then(data => setData(data))
-    },[]);
-  
+const date =format(selected,'PP')
+const {data:appointmentOptions=[],isLoading,refetch} = useQuery({
+  queryKey:["appointmentOptions",date] ,
+  queryFn: async()=>{
+    const res = await getData(`${getAvailableAppointmets}?date=${date}`)
+    return res.data.data
+  }
+});
+
+if(isLoading){
+  return <Loading/>
+}
   return (
     <section className="mt-6">
       <p className="text-center font-bold text-secondary">
@@ -20,11 +29,11 @@ const [teatment,setTreatment] = useState({})
       </p>
       <div className="mt-4 text-center grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 p-4">
         {
-            data.map((ele)=> <AppoinmentOption key={ele.id} ele={ele} setTreatment={setTreatment}  />)
+            appointmentOptions.map((ele)=> <AppoinmentOption key={ele._id} ele={ele} setTreatment={setTreatment}  />)
         }
       </div>
     {
-        teatment && <AppointmentMdal selected={selected} setTreatment={setTreatment} teatment={teatment}/>
+        teatment && <AppointmentMdal refetch={refetch} selected={selected} setTreatment={setTreatment} teatment={teatment}/>
     }  
     </section>
   );

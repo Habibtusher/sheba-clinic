@@ -1,47 +1,53 @@
-import { GoogleAuthProvider } from "firebase/auth";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
-
-const Login = () => {
-  const { signIn,googleSignIn } = useContext(AuthContext);
-  const [loginError, setLoginError] = useState("");
+import toast, { Toaster } from 'react-hot-toast';
+import { GoogleAuthProvider } from "firebase/auth";
+const Signup = () => {
+  const { createUser, updateUser,googleSignIn } = useContext(AuthContext);
+  const [signupError,setSignupError] = useState("");
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const from = location.state?.from?.pathname || "/";
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const onLogin = (data) => {
-    setLoginError("");
-    signIn(data.email, data.password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        toast.success("Login Successfully!");
-        navigate(from, {replace: true})
+  const onSignup = (data) => {
+    setSignupError("")
+    createUser(data.email, data.password)
+      .then((result) => {
+        const user = result.user;
+        const userInfo = {
+          displayName: data.name,
+        };
+        console.log("🚀 ~ file: Signup.js:26 ~ .then ~ userInfo", userInfo)
+       
+        updateUser(userInfo)
+        .then(() => {
+            navigate('/')
+            toast.success("User Created Successfully!")
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        setLoginError(errorMessage);
-        console.log(
-          "🚀 ~ file: Login.js:19 ~ onLogin ~ errorMessage",
-          errorMessage
-        );
+        setSignupError(errorMessage)
       });
   };
-  const handleGoogleLogin = () => { 
+  const handleGoogleSignup = () => { 
     googleSignIn()
     .then((result) => {
      
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
-      console.log("🚀 ~ file: Login.js:44 ~ .then ~ user", user)
       toast.success("Login Successfully!");
       navigate(from, {replace: true})
     }).catch((error) => {
@@ -56,15 +62,31 @@ const Login = () => {
   return (
     <div className="h-[800px] flex justify-center items-center">
       <div className="w-96 p-7 shadow-xl ">
-        <h2 className="text-xl text-center font-bold">Login</h2>
-        <form onSubmit={handleSubmit(onLogin)}>
+        <h2 className="text-xl text-center font-bold">Sign Up</h2>
+        <form onSubmit={handleSubmit(onSignup)}>
+          <div className="form-control w-full ">
+            <label className="label">
+              {" "}
+              <span className="label-text">Name</span>
+            </label>
+            <input
+              type="text"
+              className="input input-bordered w-full "
+              {...register("name", { required: "Name is required" })}
+            />
+            {errors.name && (
+              <p className="mt-2 text-red-600" role="alert">
+                {errors.name?.message}
+              </p>
+            )}
+          </div>
           <div className="form-control w-full ">
             <label className="label">
               {" "}
               <span className="label-text">Email</span>
             </label>
             <input
-              type="text"
+              type="email"
               className="input input-bordered w-full "
               {...register("email", { required: "Email Address is required" })}
             />
@@ -95,32 +117,27 @@ const Login = () => {
                 {errors.password?.message}
               </p>
             )}
-            <label className="label">
-              <span className="label-text-alt">Forget Password ?</span>
-            </label>
           </div>
 
           <input
-            className="btn btn-accent w-full"
+            className="btn btn-accent w-full mt-5"
             type="submit"
-            value="Login"
+            value="Sign Up"
           />
-          <div>
-            {loginError && <p className="mt-2 text-red-600">{loginError}</p>}
-          </div>
+            {signupError && <p className="mt-2 text-red-600">{signupError}</p>}
         </form>
 
         <p className="text-center mt-4">
-          New to Sheba Clinic{" "}
-          <Link className="text-primary " to="/signup">
-            Create new account
+          Already have an accpunt ?{" "}
+          <Link className="text-primary " to="/login">
+            please login
           </Link>{" "}
         </p>
         <div className="divider">OR</div>
-        <button onClick={()=>handleGoogleLogin()} className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+        <button onClick={handleGoogleSignup} className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Signup;

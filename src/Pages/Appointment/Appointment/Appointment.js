@@ -9,7 +9,7 @@ const Appointment = () => {
         <div>
             <AppointmentBanner selected={selected} setSelected={setSelected}/>
             <AvailableAppointment selected={selected} />
-           <Footer/>
+     
         </div>
     );
 };

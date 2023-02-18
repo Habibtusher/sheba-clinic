@@ -1,22 +1,18 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Navbar from "./Pages/Shared/Navbar";
-import { Route, Routes } from "react-router-dom";
-import Home from "./Pages/Home/Home";
-import About from "./Pages/About/About";
-import Login from "./Pages/Login/Login";
-import Appointment from "./Pages/Appointment/Appointment/Appointment";
+
+import { Route, RouterProvider, Routes } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+import router from "./routes/Routes/Routes";
+import { useContext } from "react";
+import { AuthContext } from "./context/AuthProvider";
 
 function App() {
+  const {isDark} = useContext(AuthContext)
   return (
-    <div>
-     <Navbar/>
-     <Routes>
-      <Route path="/" element={<Home/>} />
-      <Route path="/about" element={<About/>} />
-      <Route path="/appointment" element={<Appointment/>} />
-      <Route path="/login" element={<Login/>} />
-     </Routes>
+    <div data-theme= {isDark ? "dark": "light"}>
+      <RouterProvider router={router}/>
+      <Toaster position="top-right"></Toaster>
     </div>
   );
 }

@@ -1,10 +1,15 @@
 import { format } from "date-fns";
-import React from "react";
-
-const AppointmentMdal = ({ teatment, selected,setTreatment }) => {
+import React, { useContext } from "react";
+import { postData } from "../../../api/CommonService";
+import { AuthContext } from "../../../context/AuthProvider";
+import { postBooking } from "../../../api/ApiConstant";
+import { toast } from "react-hot-toast";
+const AppointmentMdal = ({ teatment, selected, setTreatment, refetch }) => {
   const { name, slots } = teatment;
   const date = format(selected, "PP");
-  const handleBooking = (e) => {
+  const { user } = useContext(AuthContext);
+
+  const handleBooking = async (e) => {
     e.preventDefault();
     const form = e.target;
     const pName = form.name.value;
@@ -17,13 +22,20 @@ const AppointmentMdal = ({ teatment, selected,setTreatment }) => {
       email,
       slot,
       phone,
-      teatment: name,
+      treatment: name,
     };
-    console.log(
-      "🚀 ~ file: AppointmentMdal.js:21 ~ handleBooking ~ booking",
-      booking
-    );
-    setTreatment(null)
+
+    const res = await postData(postBooking, booking);
+
+    if (res.data.status === "success") {
+      toast.success(res.data.message);
+      setTreatment(null);
+      refetch();
+    }
+    else{
+      toast.error(res.data.message);
+    }
+    
   };
   return (
     <>
@@ -57,12 +69,16 @@ const AppointmentMdal = ({ teatment, selected,setTreatment }) => {
             <input
               name="name"
               type="text"
+              defaultValue={user?.displayName}
+              disabled
               placeholder="Your Name"
               className="input input-bordered input-primary w-full "
             />
             <input
               name="email"
               type="email"
+              defaultValue={user?.email}
+              disabled
               placeholder="Email Address"
               className="input input-bordered input-primary w-full "
             />

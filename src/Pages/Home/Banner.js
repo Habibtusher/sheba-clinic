@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import chair from "../../assets/images/chair.png";
 import "../../App.css";
 import PrimaryButton from "../Shared/PrimaryButton";
+import { AuthContext } from "../../context/AuthProvider";
 const Banner = () => {
+  const {isDark} = useContext(AuthContext)
   return (
     <div class="hero max-h-screen header-container">
       <div
@@ -12,7 +14,7 @@ const Banner = () => {
         <img src={chair} class="lg:max-w-lg md:max-w-xs rounded-lg shadow-2xl" />
         <div>
           <h1 class="text-5xl font-bold">Your New Smile Start Here</h1>
-          <p className="py-6 text-gray-600">
+          <p className= {`${isDark ? "text-white py-6" : "text-gray-600 py-6"} `}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
             ever since the 1500s, when an unknown printer took a galley of type
