@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
   const updateUser = (userInfo) => {
-    console.log("🚀 ~ file: AuthProvider.js:35 ~ updateUser ~ userInfo", userInfo)
+   
     return updateProfile(auth.currentUser, userInfo);
   };
   const googleSignIn = ()=>{

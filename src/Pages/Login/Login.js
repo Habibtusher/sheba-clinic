@@ -3,6 +3,8 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { getJWT } from "../../api/ApiConstant";
+import { getData } from "../../api/CommonService";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Login = () => {
@@ -22,16 +24,14 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         toast.success("Login Successfully!");
-        navigate(from, {replace: true})
+        getUserToken(data.email)
+ 
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         setLoginError(errorMessage);
-        console.log(
-          "🚀 ~ file: Login.js:19 ~ onLogin ~ errorMessage",
-          errorMessage
-        );
+        
       });
   };
   const handleGoogleLogin = () => { 
@@ -41,9 +41,10 @@ const Login = () => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
-      console.log("🚀 ~ file: Login.js:44 ~ .then ~ user", user)
-      toast.success("Login Successfully!");
       navigate(from, {replace: true})
+   
+      toast.success("Login Successfully!");
+    
     }).catch((error) => {
      
       const errorCode = error.code;
@@ -52,6 +53,15 @@ const Login = () => {
       const credential = GoogleAuthProvider.credentialFromError(error);
     
     });
+  }
+  const getUserToken =async(email)=>{
+    const res = await getData(`${getJWT}?email=${email}`)
+    
+    if(res.data.accessToken){
+      localStorage.setItem('access_token',res.data.accessToken)
+      navigate(from, {replace: true})
+    }
+    
   }
   return (
     <div className="h-[800px] flex justify-center items-center">

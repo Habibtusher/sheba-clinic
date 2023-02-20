@@ -7,13 +7,14 @@ const Navbar = () => {
   const { user, logOut, setIsDark, isDark } = useContext(AuthContext);
 
   const handleToggle = (e) => {
-    console.log("🚀 ", e.target.checked);
+    
     setIsDark(e.target.checked)
   };
   const handleLogout = () => {
     logOut()
       .then(() => {
         toast.success("Logout Successfully!");
+        localStorage.clear();
       })
       .catch((error) => {
         console.log(error);

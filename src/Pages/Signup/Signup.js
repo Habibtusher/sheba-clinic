@@ -2,13 +2,16 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { GoogleAuthProvider } from "firebase/auth";
+import { getData, postData } from "../../api/CommonService";
+import { createNewUser, getJWT } from "../../api/ApiConstant";
+import { async } from "@firebase/util";
 const Signup = () => {
-  const { createUser, updateUser,googleSignIn } = useContext(AuthContext);
-  const [signupError,setSignupError] = useState("");
+  const { createUser, updateUser, googleSignIn } = useContext(AuthContext);
+  const [signupError, setSignupError] = useState("");
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
   const {
     register,
@@ -16,19 +19,19 @@ const Signup = () => {
     handleSubmit,
   } = useForm();
   const onSignup = (data) => {
-    setSignupError("")
+    setSignupError("");
     createUser(data.email, data.password)
       .then((result) => {
         const user = result.user;
         const userInfo = {
           displayName: data.name,
         };
-        console.log("🚀 ~ file: Signup.js:26 ~ .then ~ userInfo", userInfo)
-       
+
         updateUser(userInfo)
-        .then(() => {
-            navigate('/')
-            toast.success("User Created Successfully!")
+          .then(() => {
+            saveUser(data.name, data.email);
+
+            toast.success("User Created Successfully!");
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -38,27 +41,40 @@ const Signup = () => {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        setSignupError(errorMessage)
+        setSignupError(errorMessage);
       });
   };
-  const handleGoogleSignup = () => { 
-    googleSignIn()
-    .then((result) => {
-     
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      const user = result.user;
-      toast.success("Login Successfully!");
-      navigate(from, {replace: true})
-    }).catch((error) => {
-     
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      const email = error.customData.email;  
-      const credential = GoogleAuthProvider.credentialFromError(error);
+  const saveUser = async (name, email) => {
+    const user = { name, email };
+    const res = await postData(createNewUser, user);
+    getUserToken(email)
+ 
+  };
+  const getUserToken =async(email)=>{
+    const res = await getData(`${getJWT}?email=${email}`)
     
-    });
+    if(res.data.accessToken){
+      localStorage.setItem('access_token',res.data.accessToken)
+      navigate("/");
+    }
+    console.log("🚀 ~ file: Signup.js:56 ~ getUserToken ~ res", res.data.accessToken)
   }
+  const handleGoogleSignup = () => {
+    googleSignIn()
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        toast.success("Login Successfully!");
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+  };
   return (
     <div className="h-[800px] flex justify-center items-center">
       <div className="w-96 p-7 shadow-xl ">
@@ -124,7 +140,7 @@ const Signup = () => {
             type="submit"
             value="Sign Up"
           />
-            {signupError && <p className="mt-2 text-red-600">{signupError}</p>}
+          {signupError && <p className="mt-2 text-red-600">{signupError}</p>}
         </form>
 
         <p className="text-center mt-4">
@@ -134,7 +150,9 @@ const Signup = () => {
           </Link>{" "}
         </p>
         <div className="divider">OR</div>
-        <button onClick={handleGoogleSignup} className="btn btn-outline w-full">CONTINUE WITH GOOGLE</button>
+        <button onClick={handleGoogleSignup} className="btn btn-outline w-full">
+          CONTINUE WITH GOOGLE
+        </button>
       </div>
     </div>
   );
