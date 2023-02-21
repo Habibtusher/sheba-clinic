@@ -4,10 +4,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { useQuery } from "react-query";
-import { UPDATE_USERS, USERS } from "../../../api/ApiConstant";
-import { getData, updateData } from "../../../api/CommonService";
+import { DELETE_USER, UPDATE_USERS, USERS } from "../../../api/ApiConstant";
+import { getData, remove, updateData } from "../../../api/CommonService";
+import ConfirmationModal from "../../Shared/ConfirmationModal";
 
 const AllUsers = () => {
+  const [deleteUser,setDeleteUser] = useState(null)
   const {
     data: users = [],
     isLoading,
@@ -28,6 +30,16 @@ const AllUsers = () => {
       refetch();
     }
   };
+  const successModal = async () => {
+    const res = await remove(`${DELETE_USER}/${deleteUser._id}`);
+    if (res.data.status === "success") {
+        toast.success(res.data.message);
+        refetch()
+    }
+    else{
+        toast.success(res.data.message)
+    }
+  };
   return (
     <div >
        <h3 className="text-3xl mb-10">All Users</h3>
@@ -38,7 +50,7 @@ const AllUsers = () => {
             <th>Name</th>
             <th>Email</th>
             <th>Admin</th>
-            <th>Delet</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -59,12 +71,29 @@ const AllUsers = () => {
               </td>
               <td>
                 {" "}
-                <button className="btn btn-xs btn-danger">Delete</button>{" "}
+                <label
+                    htmlFor="confirmation-modal"
+                    className="btn  btn-sm btn-error text-white"
+                    onClick={() => setDeleteUser(user)}
+                  >
+                    Delete
+                  </label>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      {deleteUser && (
+        <ConfirmationModal
+          title={"Are you sure want to delete?"}
+          message={`If you delete ${deleteUser.name}. It cann't be ubdo.`}
+          cancel={() => setDeleteUser(null)}
+          data={deleteUser}
+          successModal={successModal}
+          actionBntName={"Delete"}
+          actionBntNameClsName ={"btn-error text-white"}
+        />
+      )}
     </div>
   );
 };

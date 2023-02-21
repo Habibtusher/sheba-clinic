@@ -27,7 +27,7 @@ const navigate= useNavigate()
     const image = data.img[0];
     const formdata = new FormData();
     formdata.append("image", image);
-    const url = ` https://api.imgbb.com/1/upload?expiration=600&key=${imagebbKey}`;
+    const url = ` https://api.imgbb.com/1/upload?key=${imagebbKey}`;
     fetch(url, {
       method: "POST",
       body: formdata,
@@ -54,7 +54,7 @@ const navigate= useNavigate()
     const res = await postData(ADD_DOCTORS, data);
     if(res.data.status === 'success') {
       toast.success(res.data.message)
-      navigate("/")
+      navigate("/dashboard/manage-doctor")
     }
   };
   return (

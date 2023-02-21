@@ -10,5 +10,8 @@ export const UPDATE_USERS = "/api/update-users/admin"
 export const IS_ADMIN = "/api/is-admin"
 export const GET_SPECIALITY = "/api/speciality"
 export const ADD_DOCTORS = "/api/add-doctors"
+export const GET_DOCTORS = "/api/doctors"
+export const DELETE_DOCTORS = "/api/delete/doctor"
+export const DELETE_USER = "/api/delete/user"
 
 
