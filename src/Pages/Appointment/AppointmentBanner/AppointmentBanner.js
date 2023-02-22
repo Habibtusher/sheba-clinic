@@ -6,12 +6,12 @@ const AppointmentBanner = ({selected,setSelected}) => {
 
 
   return (
-    <div class="hero header-container">
+    <div className="hero header-container">
       <div
         style={{ maxWidth: "100%", gap: "20px" }}
-        class="hero-content flex-col lg:flex-row-reverse"
+        className="hero-content flex-col lg:flex-row-reverse"
       >
-        <img src={chair} class="lg:max-w-lg md:max-w-xs rounded-lg shadow-2xl" />
+        <img src={chair} className="lg:max-w-lg md:max-w-xs rounded-lg shadow-2xl" />
         <div className="mr-6">
           <DayPicker
             mode="single"

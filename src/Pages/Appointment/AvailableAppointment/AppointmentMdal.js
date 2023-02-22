@@ -5,7 +5,7 @@ import { AuthContext } from "../../../context/AuthProvider";
 import { postBooking } from "../../../api/ApiConstant";
 import { toast } from "react-hot-toast";
 const AppointmentMdal = ({ teatment, selected, setTreatment, refetch }) => {
-  const { name, slots } = teatment;
+  const { name, slots,price } = teatment;
   const date = format(selected, "PP");
   const { user } = useContext(AuthContext);
 
@@ -23,6 +23,7 @@ const AppointmentMdal = ({ teatment, selected, setTreatment, refetch }) => {
       slot,
       phone,
       treatment: name,
+      price:price
     };
 
     const res = await postData(postBooking, booking);

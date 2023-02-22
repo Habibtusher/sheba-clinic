@@ -6,14 +6,14 @@ import { AuthContext } from "../../context/AuthProvider";
 const Banner = () => {
   const {isDark} = useContext(AuthContext)
   return (
-    <div class="hero max-h-screen header-container">
+    <div className="hero max-h-screen header-container">
       <div
         style={{ maxWidth: "100%", gap: "10px" }}
-        class="hero-content flex-col lg:flex-row-reverse"
+        className="hero-content flex-col lg:flex-row-reverse"
       >
-        <img src={chair} class="lg:max-w-lg md:max-w-xs rounded-lg shadow-2xl" />
+        <img src={chair} className="lg:max-w-lg md:max-w-xs rounded-lg shadow-2xl" />
         <div>
-          <h1 class="text-5xl font-bold">Your New Smile Start Here</h1>
+          <h1 className="text-5xl font-bold">Your New Smile Start Here</h1>
           <p className= {`${isDark ? "text-white py-6" : "text-gray-600 py-6"} `}>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text

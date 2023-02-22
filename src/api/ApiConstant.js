@@ -13,5 +13,8 @@ export const ADD_DOCTORS = "/api/add-doctors"
 export const GET_DOCTORS = "/api/doctors"
 export const DELETE_DOCTORS = "/api/delete/doctor"
 export const DELETE_USER = "/api/delete/user"
+export const BOOKING_BYID = "/api/booking"
+export const MAKE_PAYMENT = "/create-payment-intent"
+export const PAYMENTS = "/api/add-payment"
 
 

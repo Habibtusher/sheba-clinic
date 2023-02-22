@@ -17,7 +17,7 @@ const DashboardLayout = () => {
           type="checkbox"
           className="drawer-toggle"
         />
-        <div className="drawer-content p-10 bg-slate-50">
+        <div className="drawer-content p-10">
           <Outlet ></Outlet>
         </div>
         <div className="drawer-side">

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 import { getBooking } from "../../../api/ApiConstant";
 import { getData } from "../../../api/CommonService";
 import { AuthContext } from "../../../context/AuthProvider";
@@ -24,7 +25,7 @@ const MyAppointments = () => {
     return <Loading />;
   }
   return (
-    <div >
+    <div>
       <h3 className="text-3xl mb-10">My Appointments</h3>
       <div className="overflow-x-auto">
         <table className="table w-full">
@@ -35,17 +36,28 @@ const MyAppointments = () => {
               <th>Treatment</th>
               <th>Date</th>
               <th>Time</th>
+              <th>Payment </th>
             </tr>
           </thead>
           <tbody>
-            {bookings.map((booking,i) => (
+            {bookings.map((booking, i) => (
               <tr key={i}>
-                <th>{i +1}</th>
+                <th>{i + 1}</th>
                 <td>{booking.paitent}</td>
                 <td>{booking.treatment}</td>
                 <td>{booking.appointmentDate}</td>
                 <td>{booking.slot}</td>
-              
+                <td>
+                  {booking.price && !booking.paid && (
+                    <Link to={`/dashboard/payment/${booking._id}`}>
+                      {" "}
+                      <button className="btn btn-primary btn-sm">Pay</button>
+                    </Link>
+                  )}
+                  {booking.price && booking.paid && (
+                    <span className="text-green-500">Paid</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const AppoinmentOption = ({ ele,setTreatment }) => {
   const [openModal, setOpenModal] = useState(false);
-  const { name, slots } = ele;
+  const { name, slots,price } = ele;
   return (
     <div className="card  shadow-xl">
       <div className="card-body ">
@@ -12,6 +12,7 @@ const AppoinmentOption = ({ ele,setTreatment }) => {
           {slots.length}{" "}
           {slots.length > 1 ? "spaces available" : "space available"}
         </p>
+        <p>Price: <span className="font-bold">${price} </span></p>
         <div className="card-actions justify-center">
           <label disabled={slots.length===0} onClick={()=>setTreatment(ele)} htmlFor="booking-modal" className="btn btn-primary text-white">Book Appointment</label>
         </div>
