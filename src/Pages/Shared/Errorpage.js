@@ -20,12 +20,15 @@ const Errorpage = () => {
       });
   };
   return (
-    <div>
-      <p className="text-red-500">Something Went Wrong</p>
-      <p className="text-red-400">
+    <div className="flex justify-center items-center text-center h-screen	">
+      <div>
+           <p className="text-red-500">Something Went Wrong</p>
+      <p className="text-red-400 mx-2">
         <i>{error.statusText || error.message}</i>
       </p>
-      <h4 className='text-3xl'>please   <button onClick={() => handleLogout()}>Sign Out</button></h4>
+      <h4 className='text-xl'>please   <button onClick={() => handleLogout()}>sign out</button></h4>
+      </div>
+   
     </div>
   );
 };
