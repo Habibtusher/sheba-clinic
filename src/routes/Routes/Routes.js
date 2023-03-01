@@ -5,12 +5,14 @@ import DashboardLayout from "../../layout/DashboardLayout";
 import Main from "../../layout/Main";
 import About from "../../Pages/About/About";
 import Appointment from "../../Pages/Appointment/Appointment/Appointment";
+
 import AddDoctor from "../../Pages/Dashboard/AddDoctor/AddDoctor";
 import AllUsers from "../../Pages/Dashboard/Allusers/AllUsers";
-import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
+
 import ManageDoctors from "../../Pages/Dashboard/ManageDoctor/ManageDoctors";
 import MyAppointments from "../../Pages/Dashboard/MyAppointments/MyAppointments";
 import Payment from "../../Pages/Dashboard/Payment/Payment";
+import ContactUs from "../../Pages/Home/ContactUs";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
 import AdminRoute from "../../Pages/Shared/AdminRoute";
@@ -43,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
       },
     ],
   },
