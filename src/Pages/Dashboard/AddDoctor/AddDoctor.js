@@ -13,7 +13,7 @@ const AddDoctor = () => {
     queryKey: [],
     queryFn: async () => {
       const data = await getData(GET_SPECIALITY);
-      return data.data.data;
+      return data?.data?.data;
     },
   });
 const navigate= useNavigate()

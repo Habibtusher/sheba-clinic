@@ -18,7 +18,7 @@ const AllUsers = () => {
     queryKey: ["users"],
     queryFn: async () => {
       const res = await getData(USERS);
-      return res.data.data;
+      return res?.data?.data;
     },
   });
   useEffect(() => {}, []);

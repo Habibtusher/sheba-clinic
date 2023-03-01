@@ -75,13 +75,13 @@ const Navbar = () => {
   const dashboardRoute = pathname.includes("dashboard")
   console.log(dashboardRoute);
   return (
-    <div class="navbar bg-base-100">
+    <div className="navbar bg-base-100">
       <div
         style={{
           width: "100%",
           justifyContent: "flex-start",
         }}
-        class="navbar-start"
+        className="navbar-start"
       >
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
