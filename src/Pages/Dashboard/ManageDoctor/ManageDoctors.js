@@ -12,7 +12,7 @@ const ManageDoctors = () => {
     queryKey: ["doctors"],
     queryFn: async () => {
       const data = await getData(GET_DOCTORS);
-      return data.data.data;
+      return data?.data?.data;
     },
   });
   //   if (isLoading) {

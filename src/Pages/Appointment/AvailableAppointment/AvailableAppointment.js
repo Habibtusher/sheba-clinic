@@ -8,14 +8,13 @@ import AppoinmentOption from "./AppoinmentOption";
 import AppointmentMdal from "./AppointmentMdal";
 
 const AvailableAppointment = ({selected}) => {
-    // const [appointmentOptions,setAppointmentOptions]= useState([]);
 const [teatment,setTreatment] = useState({})
 const date =format(selected,'PP')
 const {data:appointmentOptions=[],isLoading,refetch} = useQuery({
   queryKey:["appointmentOptions",date] ,
   queryFn: async()=>{
     const res = await getData(`${getAvailableAppointmets}?date=${date}`)
-    return res.data.data
+    return res?.data?.data
   }
 });
 

@@ -18,7 +18,8 @@ const MyAppointments = () => {
     queryKey: ["bookings", user.email],
     queryFn: async () => {
       const res = await getData(url);
-      return res.data.data;
+   
+      return res?.data?.data;
     },
   });
   if (isLoading) {
