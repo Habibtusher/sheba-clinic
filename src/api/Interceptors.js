@@ -4,6 +4,7 @@ import { base_url } from "./BaseUrl";
 
 export const API = axios.create({ baseURL: base_url });
 const token =localStorage.getItem("access_token")
+
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("access_token")) {
     req.headers.authorization = `bearer ${token}`;
@@ -11,6 +12,8 @@ API.interceptors.request.use((req) => {
 
   return req;
 });
+
+
 API.interceptors.response.use(
   (response) => {
   
