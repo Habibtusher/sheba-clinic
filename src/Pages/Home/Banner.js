@@ -3,7 +3,9 @@ import chair from "../../assets/images/chair.png";
 import "../../App.css";
 import PrimaryButton from "../Shared/PrimaryButton";
 import { AuthContext } from "../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 const Banner = () => {
+  const navigate = useNavigate()
   const {isDark} = useContext(AuthContext)
   return (
     <div className="hero max-h-screen header-container">
@@ -22,7 +24,7 @@ const Banner = () => {
             only five centuries, but also the leap into electronic typesetting,
             remaining essentially unchanged.
           </p>
-          <PrimaryButton> Get Started</PrimaryButton> 
+          <PrimaryButton onClick={()=>navigate('/appointment')}></PrimaryButton> 
         </div>
       </div>
     </div>

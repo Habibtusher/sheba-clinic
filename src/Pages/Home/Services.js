@@ -6,6 +6,7 @@ import whitening from "../../assets/images/whitening.png";
 import cavity from "../../assets/images/cavity.png";
 import treatment from "../../assets/images/treatment.png";
 import PrimaryButton from "../Shared/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 const Services = () => {
   const services = [
     {
@@ -27,6 +28,7 @@ const Services = () => {
       img: whitening,
     },
   ];
+  const navigate = useNavigate()
   return (
     <div className=" my-12">
       <div className="text-center ">
@@ -46,7 +48,7 @@ const Services = () => {
             style={{ maxWidth: "100%", gap: "30px" }}
             className=" hero-content flex-col lg:flex-row"
           >
-            <img src={treatment} className="lg:max-w-lg md:max-w-xs  rounded-lg shadow-2xl" />
+            <img src={treatment} className="lg:max-w-lg md:max-w-xs  rounded-lg shadow-2xl" alt="" />
             <div className="lg:w-2/5">
               <h1 className="text-4xl font-bold">Box Office News!</h1>
               <p className="py-6">
@@ -56,7 +58,7 @@ const Services = () => {
                 of type and scrambled it to make a type specimen book. It has
                 survived.
               </p>
-           <PrimaryButton> Get Started</PrimaryButton> 
+           <PrimaryButton onClick={()=>navigate('/appointment')}> Get Started</PrimaryButton> 
             </div>
           </div>
         </div>
